@@ -54,6 +54,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BaseCore\BaseCore.csproj">
+      <Project>{ac435a9c-bbbb-4b8e-9c05-ec639194e6a4}</Project>
+      <Name>BaseCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\LocalCache\LocalCache.csproj">
       <Project>{a9890176-e547-405e-b75a-345fc4dcf5d7}</Project>
       <Name>LocalCache</Name>

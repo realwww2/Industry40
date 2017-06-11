@@ -40,14 +40,14 @@ namespace I4.LocalCapture
         }
         //Here we must consider 函数重入, return directly if exist event executing
         private int _iLock = 0;
-        private void lowlevelComm_OnOnceReadCompleted(object sender, ReadAsyncEventArgs e)
+        private void lowlevelComm_OnOnceReadCompleted(object sender, CaptureItemEventArgs e)
         {
             System.Threading.Interlocked.Increment(ref _iLock);
             if(_iLock==0)
             {
                 try
                 {
-                    WriteForOnceRead();
+                    WriteForOnceRead(e);
                 }
                 catch (Exception ex)
                 {
@@ -56,7 +56,7 @@ namespace I4.LocalCapture
             }
             System.Threading.Interlocked.Decrement(ref _iLock);
         }
-        private void WriteForOnceRead()
+        private void WriteForOnceRead(CaptureItemEventArgs e)
         {
             bool directWrite = Convert.ToBoolean(_config.GetKeyValue("RemoteServer.DirectWrite"));
             if (directWrite)
@@ -64,7 +64,7 @@ namespace I4.LocalCapture
                 RemoteServerWriteResult remoteWriteResult;
                 try
                 {
-                    remoteWriteResult = _remoteServer.Write();
+                    remoteWriteResult = _remoteServer.Write(e.CaptureItems);
                 }
                 catch (Exception ex)
                 {
@@ -73,16 +73,14 @@ namespace I4.LocalCapture
                 }
                 if (remoteWriteResult != RemoteServerWriteResult.Success)
                 {
-                    _localCache.Write();
+                    _localCache.Write(e.CaptureItems);
                 }
             }
             else
             {
-                _localCache.Write();
+                _localCache.Write(e.CaptureItems);
             }
         }
-
-        //Change Data from ReadAsyncEventArgs to other
 
     }
 }

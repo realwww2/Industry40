@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 using OpcRcw.Da;
 
 namespace I4.LowlevelCommunication
@@ -38,7 +39,12 @@ namespace I4.LowlevelCommunication
         /// 输出参数，用来存储返回的接口指针。如果函数操作出现任务失败，此参数将返回NULL。
         /// </summary>
         public object Group;
-        private OpcDaCustomItem[] opcDataCustomItems;
+        private OpcDaCustomItem[] _opcDataCustomItems;
+        private IDictionary<int, OpcDaCustomItem> _itemsDict;
+        public IDictionary<int, OpcDaCustomItem> ItemsDict
+        {
+            get { return _itemsDict; }
+        }
 
         public int[] PErrors { get; set; }
 
@@ -198,13 +204,19 @@ namespace I4.LowlevelCommunication
         {
             get
             {
-                return opcDataCustomItems;
+                return _opcDataCustomItems;
             }
             set
             {
-                if (opcDataCustomItems != null && opcDataCustomItems == value)
+                if (_opcDataCustomItems != null && _opcDataCustomItems == value)
                     return;
-                opcDataCustomItems = value;
+                _opcDataCustomItems = value;
+                foreach (OpcDaCustomItem i in _opcDataCustomItems)
+                {
+                    if (_itemsDict.ContainsKey(i.ClientHandle)) continue;
+                    _itemsDict.Add(i.ClientHandle, i);
+
+                }
             }
         }
     }

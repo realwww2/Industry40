@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using I4.BaseCore;
 
 namespace I4.RemoteServer
 {
@@ -16,6 +17,6 @@ namespace I4.RemoteServer
     public interface IRemoteServer
     {
         void Init(string configFullName);
-        RemoteServerWriteResult Write();
+        RemoteServerWriteResult Write(CaptureItem[] items);
     }
 }

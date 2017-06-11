@@ -9,6 +9,32 @@ namespace I4.LowlevelCommunication
 {
     public class OpcManager
     {
+
+        #region convert to captureItem
+        public string SourceAddress1
+        {
+            get
+            {
+                return string.Format("{0}({1})", _strRemoteServerName, _strRemoteServerIpAddress);
+            }
+        }
+        private IDictionary<int, OpcDaCustomGroup> _groupsDict;
+        public OpcDaCustomGroup GetGroup(int iGroupHandle)
+        {
+            if (_groupsDict.ContainsKey(iGroupHandle))
+                return _groupsDict[iGroupHandle];
+            return null;
+        }
+        public OpcDaCustomItem GetItem(int iGroupHandle, int iItemHandle)
+        {
+            if (_groupsDict.ContainsKey(iGroupHandle))
+            {
+                if( _groupsDict[iGroupHandle].ItemsDict.ContainsKey(iItemHandle))
+                    return _groupsDict[iGroupHandle].ItemsDict[iItemHandle];
+            }
+            return null;
+        }
+        #endregion
         /// <summary>
         /// Opc异步接口类
         /// </summary>
@@ -66,6 +92,11 @@ namespace I4.LowlevelCommunication
                         OpcDataCustomItems = LoadOpcItemConfig(xElementItem)
                     };
                     _opcGroups.Add(opcDaCustomGroupService);
+                }
+                foreach (OpcDaCustomGroup g in _opcGroups)
+                {
+                    if (_groupsDict.ContainsKey(g.ClientGroupHandle)) continue;
+                    _groupsDict.Add(g.ClientGroupHandle, g);
                 }
                 _opcDaCustomAsync = new OpcDaCustomAsync(_opcGroups, _strRemoteServerName, _strRemoteServerIpAddress);
                 _opcDaCustomAsync.OnReadCompleted += ReadCompleted;

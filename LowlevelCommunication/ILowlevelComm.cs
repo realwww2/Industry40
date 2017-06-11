@@ -10,6 +10,6 @@ namespace I4.LowlevelCommunication
     {
         void Init(string configFullFile);
         void StartRead();
-        event EventHandler<ReadAsyncEventArgs> OnOnceReadCompleted;
+        event EventHandler<CaptureItemEventArgs> OnOnceReadCompleted;
     }
 }

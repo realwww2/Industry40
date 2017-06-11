@@ -49,8 +49,8 @@
   <ItemGroup>
     <Compile Include="ILowlevelComm.cs" />
     <Compile Include="LowLevelCommunicationException.cs" />
+    <Compile Include="CaptureItemEventArgs.cs" />
     <Compile Include="Opc\OpcLowLevelCommImp.cs" />
-    <Compile Include="ReadAsyncEventArgs.cs" />
     <Compile Include="Opc\OpcDaCustomAsync.cs" />
     <Compile Include="Opc\OpcDaCustomAsyncEventArgs.cs" />
     <Compile Include="Opc\OpcDaCustomGroup.cs" />
@@ -63,6 +63,12 @@
     <Folder Include="OpcSimulator\" />
     <Folder Include="PlcSimulator\" />
     <Folder Include="Plc\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BaseCore\BaseCore.csproj">
+      <Project>{ac435a9c-bbbb-4b8e-9c05-ec639194e6a4}</Project>
+      <Name>BaseCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

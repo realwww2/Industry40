@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configs>
+  <Item key ="LogError" value ="[date]_LocalSync.Errors.log" />
+  <Item key ="LogDebug" value ="[date]_LocalSync.Debugs.log" />
+  
+  <Item key ="LocalCache.Class" value ="I4.LocalCache.MongoDBCacheImp"/>
+  <Item key ="LocalCache.Config" value ="MongoDBCache.config.xml"/>
+
+  <Item key ="RemoteServer.Class" value ="I4.RemoteServer.WebServerImp" />
+  <Item key ="RemoteServer.Config" value ="WebServer.config.xml" />
+</Configs>

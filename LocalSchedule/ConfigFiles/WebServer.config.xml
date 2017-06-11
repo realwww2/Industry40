@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configs>
+  <Item key ="url" value ="http://localhost:8080/I4/DataSync"/>
+  <Item key ="user" value ="tester" />
+  <Item key ="password" value ="tester" />
+</Configs>

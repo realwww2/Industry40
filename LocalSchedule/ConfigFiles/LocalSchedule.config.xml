@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configs>
+  <Item key ="LogError" value ="[date]_LocalSchedule.Errors.log" />
+  <Item key ="LogDebug" value ="[date]_LocalSchedule.Debugs.log" />
+  <!-- value ="lc1:ls1;lc2:ls2;...."-->
+  <Item key ="Schedule" value ="LocalCatpure1.Config:LocalSync1.Config;" />
+  <Item key ="LocalCapture1.Config" value ="LocalCapture.config.xml"/>
+  <Item key ="LocalSync1.Config" value ="LocalSync.config.xml"/>
+
+</Configs>

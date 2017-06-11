@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configs>
+  <Item key ="connect" value ="mongodb://localhost"/>
+  <Item key ="database" value ="I4Demo" />
+</Configs>

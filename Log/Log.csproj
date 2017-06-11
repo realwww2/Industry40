@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CA31B17D-6050-408E-A188-450576946A23}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{A103D48D-65FE-4D34-8396-919F952F99AB}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LocalCapture</RootNamespace>
-    <AssemblyName>LocalCapture</AssemblyName>
+    <RootNamespace>Log</RootNamespace>
+    <AssemblyName>Log</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,16 +22,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,35 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppGlobal.cs" />
-    <Compile Include="Director.cs" />
-    <Compile Include="LocalCaptureException.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\LocalCache\LocalCache.csproj">
-      <Project>{a9890176-e547-405e-b75a-345fc4dcf5d7}</Project>
-      <Name>LocalCache</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\LocalConfig\LocalConfig.csproj">
+    <ProjectReference Include="..\LocalConfig\LocalConfig.csproj">
       <Project>{07fd1e1c-12e0-4068-b51b-04f6cc3af27d}</Project>
       <Name>LocalConfig</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Log\Log.csproj">
-      <Project>{a103d48d-65fe-4d34-8396-919f952f99ab}</Project>
-      <Name>Log</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\LowlevelCommunication\LowlevelCommunication.csproj">
-      <Project>{74974a6a-27b3-468d-b053-f88a747e15cf}</Project>
-      <Name>LowlevelCommunication</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\RemoteServer\RemoteServer.csproj">
-      <Project>{75ab9a42-c4a5-4d0a-95d2-946c0bd4c460}</Project>
-      <Name>RemoteServer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,26 +5,29 @@ using System.Web;
 using System.IO;
 using System.Configuration;
 using System.Text;
-using I4.LocalConfig;
 
 namespace I4.Log
 {
     public class Logger
     {
         private string _basePath;
-        public Logger(string basePath)
+        private string _errorFileStr;
+        private string _debugFileStr;
+        public Logger(string basePath,string errorFileStr,string debugFileStr)
         {
             if (!Directory.Exists(basePath))
                 Directory.CreateDirectory(basePath);
             _basePath = basePath;
+            _errorFileStr = errorFileStr;
+            _debugFileStr = debugFileStr;
         }
         private string ErrorFileName
         {
-            get { return GetFileByKey(_basePath,"LogError"); }
+            get { return GetFileByKey(_basePath, _errorFileStr); }
         }
         private string DebugFileName
         {
-            get { return GetFileByKey(_basePath,"LogDebug"); }
+            get { return GetFileByKey(_basePath, _debugFileStr); }
         }
         public void LogError(string str)
         {

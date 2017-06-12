@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using I4.Log;
-using I4.LocalConfig;
 
-namespace I4.LocalCapture
+namespace I4.BaseCore
 {
-    class AppGlobal
+    public class AppGlobal
     {
 
         public static AppGlobal Instance = new AppGlobal();
@@ -17,10 +16,10 @@ namespace I4.LocalCapture
         }
 
         private string _basePath;
-        public void LoadAppGlobal(string basePath)
+        public void LoadAppGlobal(string basePath,string logErrorStr,string logDebugStr)
         {
             _basePath = basePath;
-            _logger = new Logger(string.Format("{0}\\Log", _basePath));
+            _logger = new Logger(string.Format("{0}\\Log", _basePath),logErrorStr,logDebugStr);
         }
         public string Path2Full(string fileNameOnly)
         {

@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppGlobal.cs" />
     <Compile Include="Director.cs" />
     <Compile Include="LocalCaptureException.cs" />
     <Compile Include="Program.cs" />

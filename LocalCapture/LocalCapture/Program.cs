@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using I4.LocalConfig;
+using I4.BaseCore;
 
 namespace I4.LocalCapture
 {
@@ -20,8 +21,11 @@ namespace I4.LocalCapture
                     throw new LocalCaptureException("args of main function must be 1");
                 }
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
-                AppGlobal.Instance.LoadAppGlobal(basePath);
-                Director director = new Director(new Config(basePath, args[0]));
+                Config config = new Config(basePath, args[0]);
+
+                AppGlobal.Instance.LoadAppGlobal(basePath, config.GetKeyValue("LogError"), config.GetKeyValue("LogDebug"));
+
+                Director director = new Director(config);
                 director.Execute();
             }
             catch (Exception ex)

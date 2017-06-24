@@ -14,6 +14,8 @@ namespace I4.LocalCapture
         //LocalCapture LocalCapture.config.xml
         static void Main(string[] args)
         {
+            //Console.WriteLine("test"); Console.ReadLine();//for test
+            Director director;
             try
             {
                 if (args.GetLength(0) != 1)
@@ -21,18 +23,26 @@ namespace I4.LocalCapture
                     throw new LocalCaptureException("args of main function must be 1");
                 }
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
+                basePath = basePath.Remove(basePath.Length - 1);
                 Config config = new Config(basePath, args[0]);
 
                 AppGlobal.Instance.LoadAppGlobal(basePath, config.GetKeyValue("LogError"), config.GetKeyValue("LogDebug"));
 
-                Director director = new Director(config);
+                director = new Director(config);
+                director.Init();
                 director.Execute();
+                
             }
             catch (Exception ex)
             {
                 AppGlobal.Instance.Logger.LogError(ex);
             }
-            
+            finally
+            {
+                //director.Close();
+                System.Environment.Exit(0);
+            }
+
         }
     }
 }

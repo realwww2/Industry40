@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,13 +40,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IRemoteServer.cs" />
+    <Compile Include="RemoteServerException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebServer\TestServerImp.cs" />
     <Compile Include="WebServer\WebServerImp.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BaseCore\BaseCore.csproj">
       <Project>{ac435a9c-bbbb-4b8e-9c05-ec639194e6a4}</Project>
       <Name>BaseCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LocalConfig\LocalConfig.csproj">
+      <Project>{07fd1e1c-12e0-4068-b51b-04f6cc3af27d}</Project>
+      <Name>LocalConfig</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Log\Log.csproj">
+      <Project>{a103d48d-65fe-4d34-8396-919f952f99ab}</Project>
+      <Name>Log</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

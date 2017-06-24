@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <System>
-  <OpcServer ServerName="OPC.SimaticNET" IPAddress="10.102.102.118">
+  <OpcServer ServerName="OPC.SimaticNET" IPAddress="192.168.214.100">
     <!--采煤机参数-->
     <ShearerInfo GroupName="ShearerInfoGroup" ClientHandle="1" UpdateRate="500">
       <!--左牵，1表示左牵，0表示未运动-->

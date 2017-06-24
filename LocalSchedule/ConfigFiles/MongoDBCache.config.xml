@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Configs>
-  <Item key ="connect" value ="mongodb://localhost"/>
+  <Item key ="connect" value ="mongodb://localhost:100"/>
   <Item key ="database" value ="I4Demo" />
 </Configs>
+
+<!--mongodb的基本操作可以参看 http://www.cnblogs.com/yaozhenfa/p/4574898.html-->

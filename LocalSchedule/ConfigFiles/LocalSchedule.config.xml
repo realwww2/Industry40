@@ -3,9 +3,9 @@
   <Item key ="LogError" value ="[date]_LocalSchedule.Errors.log" />
   <Item key ="LogDebug" value ="[date]_LocalSchedule.Debugs.log" />
   <!-- value ="lc1:ls1;lc2:ls2;...."-->
-  <Item key ="Schedule" value ="p1:args1;p2:args2" />
+  <Item key ="Schedule" value ="p1,args1;p2,args2" />
   <Item key ="p1" value ="localCapture.exe"/>
-  <Item key ="args1" value ="LocalSync.config.xml"/>
+  <Item key ="args1" value ="LocalCapture.config.xml"/>
   <Item key ="p2" value ="Localsync.exe"/>
   <Item key ="args2" value ="LocalSync.config.xml"/>
 

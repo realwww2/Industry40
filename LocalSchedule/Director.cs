@@ -39,21 +39,18 @@ namespace I4.LocalSchedule
 
         private void ThreadMonitor(object obj)
         {
-            IDictionary<MonitorClass, Process> mDict = new Dictionary<MonitorClass, Process>();
             GC.GetTotalMemory(true); // how much GC total use 
             string schedule = _config.GetKeyValue("Schedule");
+            //here all process of ms are null
             MonitorClass[] ms = MonitorClass.Parse(schedule, _config);
             foreach (MonitorClass m in ms)
             {
-                if (mDict.ContainsKey(m))
-                    throw new LocalScheduleException("config file has duplicate process");
                 KillProcess(m.ProcessName);
-                mDict.Add(m, null);
                 SendMsg(string.Format("{0} process will be started...", m.ToString()));
             }        
             do
             {
-                ResetAllProcess(mDict);
+                ResetAllProcess(ms);
                 System.Threading.Thread.Sleep(1000);
             } while (true);
         }
@@ -62,6 +59,7 @@ namespace I4.LocalSchedule
         {
             public string ProcessName { get; set; }
             public string Args { get; set; }
+            public Process Process { get; set; }
             public MonitorClass(string processName, string args)
             {
                 ProcessName = processName;
@@ -84,15 +82,16 @@ namespace I4.LocalSchedule
             }
         }
 
-        private void ResetAllProcess(IDictionary<MonitorClass, Process> mDict)
+        private void ResetAllProcess(MonitorClass[] ms)
         {
-            foreach (MonitorClass m in mDict.Keys)
+            for (int i = 0; i < ms.GetLength(0); i++)
             {
-                if (IsResetProcess(mDict[m]))
+                MonitorClass m = ms[i];
+                if (IsResetProcess(m.Process))
                 {
                     Process newProcess = CreateOneProcess(AppGlobal.Instance.Path2Full(m.ProcessName), m.Args);
-                    SendMsg(string.Format("New process {0} will be started...", m.ToString()));
-                    mDict[m] = newProcess;
+                    SendMsg(string.Format("New process {0} is starting...", m.ToString()));
+                    m.Process = newProcess;
                 }
             }
         }
@@ -130,6 +129,7 @@ namespace I4.LocalSchedule
 
         private void KillProcess(string processName)
         {
+            processName = processName.Substring(0, processName.Length - 4);
             Process[] Processes = Process.GetProcesses();
             foreach (Process p in Processes)
             {
@@ -146,7 +146,7 @@ namespace I4.LocalSchedule
             Process[] Processes = Process.GetProcesses();
             foreach (Process p in Processes)
             {
-                if (p.Equals(process))
+                if (p.Id.Equals(process.Id) && p.ProcessName.Equals (process.ProcessName))
                 {
                     return true;
                 }

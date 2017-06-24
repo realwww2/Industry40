@@ -13,10 +13,14 @@ namespace I4.LocalConfig
 
         private IDictionary<string,string> _configDict;
         
-
+        public Config (string fullFileName)
+        {
+            _configDict = LoadConfig(fullFileName);
+        }
         public Config(string basePath,string configFileName)
         { 
-            _configDict = LoadConfig(string.Format("{0}\\{1}",basePath, configFileName));
+
+            _configDict = LoadConfig(string.Format("{0}\\ConfigFiles\\{1}",basePath, configFileName));
         }
         private IDictionary<string, string> LoadConfig(string configFile)
         {
@@ -33,8 +37,8 @@ namespace I4.LocalConfig
                 {
                     string key = item.Attribute("key").Value;
                     string value = item.Attribute("value").Value;
-                    if (!_configDict.ContainsKey(key))
-                        _configDict.Add(key, value);
+                    if (!configDict.ContainsKey(key))
+                        configDict.Add(key, value);
                 }
             }
             catch (Exception ex)
@@ -50,7 +54,8 @@ namespace I4.LocalConfig
             {
                 throw new LocalConfigException(string.Format("Key {0} is not exist.", key));
             }
-            return _configDict[key];
+            string rtn  = _configDict[key];
+            return rtn;
         }
     }
 }

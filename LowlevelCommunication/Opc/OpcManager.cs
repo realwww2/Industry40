@@ -18,7 +18,7 @@ namespace I4.LowlevelCommunication
                 return string.Format("{0}({1})", _strRemoteServerName, _strRemoteServerIpAddress);
             }
         }
-        private IDictionary<int, OpcDaCustomGroup> _groupsDict;
+        private IDictionary<int, OpcDaCustomGroup> _groupsDict = new Dictionary<int,OpcDaCustomGroup>();
         public OpcDaCustomGroup GetGroup(int iGroupHandle)
         {
             if (_groupsDict.ContainsKey(iGroupHandle))

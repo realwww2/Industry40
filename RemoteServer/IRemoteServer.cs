@@ -18,5 +18,6 @@ namespace I4.RemoteServer
     {
         void Init(string configFullName);
         RemoteServerWriteResult Write(CaptureItem[] items);
+
     }
 }

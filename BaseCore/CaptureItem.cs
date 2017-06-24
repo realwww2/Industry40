@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace I4.BaseCore
 {
@@ -31,5 +32,38 @@ namespace I4.BaseCore
         public string value { get; set; }
         //update rate(ms): "500", "1000"
         public string UpdateRate { get; set; }
+
+        public string CreateUploadStr(string header)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(string.Format("{0}@@@",header));
+
+            sb.Append(string.Format("{0}@@@",captureTime));
+            sb.Append(string.Format("{0}@@@",captureType));
+            sb.Append(string.Format("{0}@@@",SourceAddress));
+            sb.Append(string.Format("{0}@@@",SourceAddress2));
+            sb.Append(string.Format("{0}@@@",SourceAddress3));
+            sb.Append(string.Format("{0}@@@",RequestDataType));
+            sb.Append(string.Format("{0}@@@",value));
+            sb.Append(string.Format("{0}",UpdateRate));
+
+            return sb.ToString();
+        }
+        public static CaptureItem CreateItemFromUploadStr(string line)
+        {
+            string[] parts = line.Split(new string[] {"@@@"},StringSplitOptions.None);
+            Debug.Assert (parts.GetLength(0)>=9);
+            CaptureItem item = new CaptureItem(); 
+            //parts[0] is header, ignore it
+            item.captureTime = parts[1];
+            item.captureType = parts[2];
+            item.SourceAddress = parts[3];
+            item.SourceAddress2 = parts[4];
+            item.SourceAddress3 = parts[5];
+            item.RequestDataType = parts[6];
+            item.value = parts[7];
+            item.UpdateRate = parts[8];
+            return item;
+        }
     }
 }

@@ -8,6 +8,7 @@ using I4.LowlevelCommunication;
 using I4.LocalCache;
 using I4.RemoteServer;
 using I4.LocalConfig;
+using I4.BaseCore;
 
 namespace I4.LocalCapture
 {
@@ -20,30 +21,41 @@ namespace I4.LocalCapture
 
         public Director (Config config)
         {
-            string lowlevelComm_class = config.GetKeyValue("LowlevelCommunication.Class");
-            string localCache_class = config.GetKeyValue("LocalCache.Class");
-            string remoteServer_class = config.GetKeyValue("RemoteServer.Class");
+            _config = config;
+            string lowlevelComm_class = _config.GetKeyValue("LowlevelCommunication.Class");
+            string localCache_class = _config.GetKeyValue("LocalCache.Class");
+            string remoteServer_class = _config.GetKeyValue("RemoteServer.Class");
 
-            _lowlevelComm = Activator.CreateInstance(Type.GetType(lowlevelComm_class)) as ILowlevelComm;
-            _lowlevelComm.Init(AppGlobal.Instance.Path2Full(config.GetKeyValue("LowlevelCommunication.Config")));
+            
+
+            _lowlevelComm = Activator.CreateInstance(Type.GetType(lowlevelComm_class + ", LowlevelCommunication")) as ILowlevelComm;
             _lowlevelComm.OnOnceReadCompleted += lowlevelComm_OnOnceReadCompleted;
 
-            _localCache = Activator.CreateInstance(Type.GetType(localCache_class)) as ILocalCache ;
-            _localCache.Init(AppGlobal.Instance.Path2Full(config.GetKeyValue("LocalCache.Config")));
+            _localCache = Activator.CreateInstance(Type.GetType(localCache_class + ", LocalCache")) as ILocalCache;
+            _remoteServer = Activator.CreateInstance(Type.GetType(remoteServer_class + ", RemoteServer")) as IRemoteServer;
 
-            _remoteServer = Activator.CreateInstance(Type.GetType(remoteServer_class)) as IRemoteServer;
-            _remoteServer.Init(AppGlobal.Instance.Path2Full(config.GetKeyValue("RemoteServer.Config")));
-        }        
+        }       
+       
+        public void Init()
+        {
+            _lowlevelComm.Init(AppGlobal.Instance.Path2FullConfig(_config.GetKeyValue("LowlevelCommunication.Config")));
+            _localCache.Init(AppGlobal.Instance.Path2FullConfig(_config.GetKeyValue("LocalCache.Config")));       
+            _remoteServer.Init(AppGlobal.Instance.Path2FullConfig(_config.GetKeyValue("RemoteServer.Config")));
+        }
         public void Execute()
         {
             _lowlevelComm.StartRead();
+            Console.Read();
+        }
+        public void Close()
+        {
+            _localCache.Close();
         }
         //Here we must consider 函数重入, return directly if exist event executing
-        private int _iLock = 0;
+
         private void lowlevelComm_OnOnceReadCompleted(object sender, CaptureItemEventArgs e)
         {
-            System.Threading.Interlocked.Increment(ref _iLock);
-            if(_iLock==0)
+            lock(this)
             {
                 try
                 {
@@ -54,7 +66,7 @@ namespace I4.LocalCapture
                     AppGlobal.Instance.Logger.LogError(ex);
                 }                
             }
-            System.Threading.Interlocked.Decrement(ref _iLock);
+
         }
         private void WriteForOnceRead(CaptureItemEventArgs e)
         {

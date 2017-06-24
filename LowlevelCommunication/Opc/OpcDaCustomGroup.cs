@@ -40,7 +40,7 @@ namespace I4.LowlevelCommunication
         /// </summary>
         public object Group;
         private OpcDaCustomItem[] _opcDataCustomItems;
-        private IDictionary<int, OpcDaCustomItem> _itemsDict;
+        private IDictionary<int, OpcDaCustomItem> _itemsDict = new Dictionary<int,OpcDaCustomItem>();
         public IDictionary<int, OpcDaCustomItem> ItemsDict
         {
             get { return _itemsDict; }

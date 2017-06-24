@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -30,6 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MongoDB.Bson, Version=1.7.0.4714, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\third_party\dll\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=1.7.0.4714, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\third_party\dll\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core">
+      <HintPath>..\third_party\dll\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ILocalCache.cs" />
+    <Compile Include="LocalCacheException.cs" />
+    <Compile Include="MongoDB\MongoDBSimulatorCacheImp.cs" />
     <Compile Include="MongoDB\MongoDBCacheImp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -47,6 +60,14 @@
     <ProjectReference Include="..\BaseCore\BaseCore.csproj">
       <Project>{ac435a9c-bbbb-4b8e-9c05-ec639194e6a4}</Project>
       <Name>BaseCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LocalConfig\LocalConfig.csproj">
+      <Project>{07fd1e1c-12e0-4068-b51b-04f6cc3af27d}</Project>
+      <Name>LocalConfig</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Log\Log.csproj">
+      <Project>{a103d48d-65fe-4d34-8396-919f952f99ab}</Project>
+      <Name>Log</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

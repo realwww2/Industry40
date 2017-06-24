@@ -21,7 +21,7 @@ namespace I4.LocalSchedule
                     throw new LocalScheduleException("args of main function must be 1");
                 }
                 string basePath = AppDomain.CurrentDomain.BaseDirectory;
-
+                basePath = basePath.Remove(basePath.Length - 1);
                 Config config = new Config(basePath, args[0]);
 
                 AppGlobal.Instance.LoadAppGlobal(basePath, config.GetKeyValue("LogError"), config.GetKeyValue("LogDebug"));
@@ -34,6 +34,11 @@ namespace I4.LocalSchedule
             {
                 AppGlobal.Instance.Logger.LogError(ex);
             }
+            finally
+            {
+                System.Environment.Exit(0);
+            }
         }
+
     }
 }

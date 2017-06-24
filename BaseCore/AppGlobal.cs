@@ -25,10 +25,23 @@ namespace I4.BaseCore
         {
             return string.Format("{0}\\{1}", _basePath, fileNameOnly);
         }
+        public string Path2FullConfig(string fileNameOnly)
+        {
+            return string.Format("{0}\\ConfigFiles\\{1}", _basePath, fileNameOnly);
+        }
         private Logger _logger;
         public Logger Logger
         {
-            get { return _logger; }
+            get
+            {
+                if (_logger == null)
+                {
+                    string basePath = AppDomain.CurrentDomain.BaseDirectory;
+                    basePath = basePath.Remove(basePath.Length - 1);
+                    _logger = new Logger(string.Format("{0}\\log", basePath),"AppStartError.log","AppStartDebug.log");
+                }
+                return _logger;
+            }
         }
 
     }

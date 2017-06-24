@@ -10,24 +10,24 @@ namespace I4.Log
 {
     public class Logger
     {
-        private string _basePath;
+        private string _logPath;
         private string _errorFileStr;
         private string _debugFileStr;
-        public Logger(string basePath,string errorFileStr,string debugFileStr)
+        public Logger(string logPath,string errorFileStr,string debugFileStr)
         {
-            if (!Directory.Exists(basePath))
-                Directory.CreateDirectory(basePath);
-            _basePath = basePath;
+            if (!Directory.Exists(logPath))
+                Directory.CreateDirectory(logPath);
+            _logPath = logPath;
             _errorFileStr = errorFileStr;
             _debugFileStr = debugFileStr;
         }
         private string ErrorFileName
         {
-            get { return GetFileByKey(_basePath, _errorFileStr); }
+            get { return GetFileByKey(_errorFileStr); }
         }
         private string DebugFileName
         {
-            get { return GetFileByKey(_basePath, _debugFileStr); }
+            get { return GetFileByKey(_debugFileStr); }
         }
         public void LogError(string str)
         {
@@ -37,7 +37,7 @@ namespace I4.Log
         public void LogError(Exception e)
         {
             StringBuilder sb = new StringBuilder();
-            CreateExceptionString(sb, e.InnerException, "    ");
+            CreateExceptionString(sb, e, "    ");
             LogError(sb.ToString());
         }
 
@@ -46,11 +46,11 @@ namespace I4.Log
             File.AppendAllText(DebugFileName, "\n" + str);
         }
 
-        private string GetFileByKey(string basePath, string key)
+        private string GetFileByKey(string key)
         {
-            key = key.Replace("[Date]", DateTime.Now.Date.ToString("dd-MM-yyyy"));
-            key = key.Replace("[Time]", DateTime.Now.ToString("dd-MM-yyyy hh mm ss"));
-            return string.Format("{0}\\{1}", basePath, key);
+            key = key.Replace("[date]", DateTime.Now.Date.ToString("dd-MM-yyyy"));
+            key = key.Replace("[time]", DateTime.Now.ToString("dd-MM-yyyy hh mm ss"));
+            return string.Format("{0}\\{1}", _logPath, key);
         }
 
         private void CreateExceptionString(StringBuilder sb, Exception e, string indent)
